@@ -16,21 +16,12 @@ class Fila:
 
     def add(self,nome,prioridade):
         paciente = Paciente(nome, prioridade)
-        if self.tam1 == 0 or self.tam2 == 0: #Se a fila estiver vazia, adiciona o paciente no início;
-            if paciente.prioridade:
-                self.pacientes_prioritarios[0] = paciente.nome
-            else:
-                self.pacientes_naoprioritarios[0] = paciente.nome
+        if prioridade:
+            self.pacientes_prioritarios[self.tam1] = paciente.nome
             self.tam1 += 1
-            self.tam2 += 1
         else:
-            if self.tam1 > 0 or self.tam2 > 0:
-                if paciente.prioridade:
-                    self.pacientes_prioritarios[self.tam1] = paciente.nome
-                    self.tam1 +=1
-                else:
-                    self.pacientes_naoprioritarios[self.tam2] = paciente.nome
-                    self.tam2 +=1
+            self.pacientes_naoprioritarios[self.tam2] = paciente.nome
+            self.tam2 += 1
 
     def atender(self):
         if self.tam1 == 0 and self.tam2 == 0:
@@ -40,7 +31,7 @@ class Fila:
         if self.tam1 > 0 and self.tam2 > 0:
           if self.count_prioridade == 0:
               paciente_antendido = self.pacientes_prioritarios[0]
-              for i in range(self.tam1):
+              for i in range(self.tam1-1):
                 self.pacientes_prioritarios[i] = self.pacientes_prioritarios[i+1]
               self.pacientes_prioritarios[self.tam1-1] = None
               self.atendimentos_prioridade += 1
@@ -51,7 +42,7 @@ class Fila:
           else:
             if self.count_prioridade == 1 and self.count_semprioridade < 2:
               paciente_antendido = self.pacientes_naoprioritarios[0]
-              for i in range(self.tam2):
+              for i in range(self.tam2-1):
                 self.pacientes_naoprioritarios[i] = self.pacientes_naoprioritarios[i+1]
               self.pacientes_naoprioritarios[self.tam2-1] = None
               self.atendimentos_semprioridade += 1
@@ -63,7 +54,7 @@ class Fila:
 
         if self.tam1 > 0:
             paciente_antendido = self.pacientes_prioritarios[0]
-            for i in range(self.tam1):
+            for i in range(self.tam1-1):
                 self.pacientes_prioritarios[i] = self.pacientes_prioritarios[i+1]
             self.pacientes_prioritarios[self.tam1-1] = None
             self.atendimentos_prioridade += 1
@@ -73,7 +64,7 @@ class Fila:
             return paciente_antendido
         
         paciente_antendido = self.pacientes_naoprioritarios[0]
-        for i in range(self.tam2):
+        for i in range(self.tam2-1):
             self.pacientes_naoprioritarios[i] = self.pacientes_naoprioritarios[i+1]
         self.pacientes_naoprioritarios[self.tam2-1] = None
         self.atendimentos_semprioridade += 1
@@ -85,14 +76,14 @@ class Fila:
         seqNomes_prioridade = "" 
         seqNomes_semprioridade = "" 
         i = 0 
-        aux = self.pacientes_prioritarios[i] 
-        while i < self.tam1: 
+        while i < self.tam1 and self.tam1 != 0: 
+            aux = self.pacientes_prioritarios[i] 
             seqNomes_prioridade += f"{i + 1}- Nome: {aux};\n" 
             i += 1 
             aux = self.pacientes_prioritarios[i] 
         i = 0
-        aux = self.pacientes_naoprioritarios[i] 
         while i < self.tam2: 
+            aux = self.pacientes_naoprioritarios[i] 
             seqNomes_semprioridade += f"{i + 1}- Nome: {aux};\n" 
             i += 1 
             aux = self.pacientes_naoprioritarios[i] 
