@@ -72,7 +72,7 @@ class Fila:
         self.tam2 -= 1
         return paciente_antendido
 
-    def listar(self):
+    def listar(self): # Imprime a lista de pacientes
         seqNomes_prioridade = "" 
         seqNomes_semprioridade = "" 
         i = 0 
@@ -89,7 +89,7 @@ class Fila:
             aux = self.pacientes_naoprioritarios[i] 
         return f"Lista de pacientes prioritários:\n{seqNomes_prioridade}\nLista de pacientes sem prioridade:\n{seqNomes_semprioridade}"
     
-    def total(self):
+    def total(self): #Mostra o total de pacientes atendidos
         total = self.atendimentos_prioridade + self.atendimentos_semprioridade
         if total == 0:
             return "Não foi realizado nenhum atendimento"
