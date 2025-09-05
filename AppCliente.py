@@ -20,6 +20,7 @@ if __name__ == "__main__":
             else:
                 prioridade = False
             fila_pacientes.add(nome, prioridade)
+            print("Paciente adicionado com sucesso!")
         elif n == 2:
             print("---- ATENDIMENTO AO PACIENTE ----")
             print(f"Paciente atendido: {fila_pacientes.atender()}") #Atende na ordem que foi adicionado com as regras estabelecidas
