@@ -7,31 +7,31 @@ class Fila:
     def __init__(self):
         self.pacientes_prioritarios = [None]*1000
         self.pacientes_naoprioritarios = [None]*1000
-        self.tam1 = 0 #Inicializa o tamanho do array como índice 0
-        self.tam2 = 0
+        self.tam1 = 0 #Inicializa o tamanho do array como índice 0 (Prioridade)
+        self.tam2 = 0 #Inicializa o tamanho do array como índice 0 (Sem Prioridade)
         self.count_prioridade = 0 #Contagem de pacientes com prioridades
         self.count_semprioridade = 0 #Contagem de pacientes sem prioridades
-        self.atendimentos_prioridade = 0
-        self.atendimentos_semprioridade = 0
+        self.atendimentos_prioridade = 0 #Contagem de pacientes com prioridades atendidos
+        self.atendimentos_semprioridade = 0 #Contagem de pacientes sem prioridade atendidos
 
     def add(self,nome,prioridade):
         paciente = Paciente(nome, prioridade)
-        if prioridade:
+        if prioridade: # Se tem prioridade, adiciona no array de pacientes prioritários
             self.pacientes_prioritarios[self.tam1] = paciente.nome
             self.tam1 += 1
-        else:
+        else: # Se não tem prioridade, adiciona no array de pacientes sem prioridades
             self.pacientes_naoprioritarios[self.tam2] = paciente.nome
             self.tam2 += 1
 
     def atender(self):
-        if self.tam1 == 0 and self.tam2 == 0:
+        if self.tam1 == 0 and self.tam2 == 0: #Se não tiver nenhum paciente
             resp = "Não há pacientes na fila para serem atendidos!"
             return resp
 
-        if self.tam1 > 0 and self.tam2 > 0:
+        if self.tam1 > 0 and self.tam2 > 0: #Se houver pacientes com prioridade e sem prioridade
           if self.count_prioridade == 0:
               paciente_antendido = self.pacientes_prioritarios[0]
-              for i in range(self.tam1-1):
+              for i in range(self.tam1-1): #Muda a posição dos pacientes
                 self.pacientes_prioritarios[i] = self.pacientes_prioritarios[i+1]
               self.pacientes_prioritarios[self.tam1-1] = None
               self.atendimentos_prioridade += 1
@@ -39,10 +39,10 @@ class Fila:
               self.count_semprioridade = 0
               self.tam1 -= 1
               return paciente_antendido
-          else:
+          else: 
             if self.count_prioridade == 1 and self.count_semprioridade < 2:
               paciente_antendido = self.pacientes_naoprioritarios[0]
-              for i in range(self.tam2-1):
+              for i in range(self.tam2-1): #Muda a posição dos pacientes
                 self.pacientes_naoprioritarios[i] = self.pacientes_naoprioritarios[i+1]
               self.pacientes_naoprioritarios[self.tam2-1] = None
               self.atendimentos_semprioridade += 1
@@ -52,9 +52,9 @@ class Fila:
               self.tam2 -= 1
               return paciente_antendido
 
-        if self.tam1 > 0:
+        if self.tam1 > 0: #Se houver somente pacientes com prioridade
             paciente_antendido = self.pacientes_prioritarios[0]
-            for i in range(self.tam1-1):
+            for i in range(self.tam1-1): #Muda a posição dos pacientes
                 self.pacientes_prioritarios[i] = self.pacientes_prioritarios[i+1]
             self.pacientes_prioritarios[self.tam1-1] = None
             self.atendimentos_prioridade += 1
@@ -62,9 +62,9 @@ class Fila:
             self.count_semprioridade = 0
             self.tam1 -= 1
             return paciente_antendido
-        
+        #Se houver somente pacientes sem prioridade        
         paciente_antendido = self.pacientes_naoprioritarios[0]
-        for i in range(self.tam2-1):
+        for i in range(self.tam2-1): #Muda a posição dos pacientes
             self.pacientes_naoprioritarios[i] = self.pacientes_naoprioritarios[i+1]
         self.pacientes_naoprioritarios[self.tam2-1] = None
         self.atendimentos_semprioridade += 1
